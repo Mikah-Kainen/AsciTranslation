@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AsciTranslation
 {
@@ -37,35 +38,35 @@ namespace AsciTranslation
         static void Main(string[] args)
         {
 
-            char charA = 'a';
-            int askiA = charA;
+            int ZeroCount = 6;
 
-            var result1 = AskiTranslation("I Like to eat pizza all day");
-            var result2 = AskiDecoder(result1);
-            //Console.WriteLine($"{AskiTranslation("I Like to eat pizza all day")}");
-            //Console.WriteLine($"{AskiDe)}");  
-
-            string filename = @"\\gmrdc1\Folder Redirection\Mikah.Kainen\Desktop\cpppractice\main.cpp";
+            string filename = @"../../../main.cpp";
             byte[] fileBytes = File.ReadAllBytes(filename);
 
             string collumn;
+            for(int i = 0; i < ZeroCount + 1; i ++)
+            {
+                Console.Write(" ");
+            }
             for(int i = 0; i < 16; i ++)
             {
                 collumn = i.ToString("X");
-                Console.Write($"{collumn} ");
+                Console.Write($"0{collumn} ");
             }
             Console.WriteLine("   DECODED TEXT");
 
             int index;
             string Hex;
             int extra = fileBytes.Length % 16;
-            int row;
-            string rowHex;
+            string row;
             for (int i = 0; i < fileBytes.Length / 16; i++)
             {
-                row = i * 16;
-                rowHex = row.ToString("X");
-                Console.Write($"{rowHex} ");
+                row = i.ToString("X");
+                for(int x = row.Length; x < ZeroCount; x ++)
+                {
+                    Console.Write("0");
+                }
+                Console.Write($"{row} ");
                 for (int x = 0; x < 16; x++)
                 {
                     index = i * 16 + x;
@@ -96,7 +97,13 @@ namespace AsciTranslation
                 Console.WriteLine();
             }
 
-            for(int i = fileBytes.Length - extra; i < fileBytes.Length; i ++)
+            row = (fileBytes.Length/16).ToString("X");
+            for (int x = row.Length; x < ZeroCount; x++)
+            {
+                Console.Write("0");
+            }
+            Console.Write($"{row} ");
+            for (int i = fileBytes.Length - extra; i < fileBytes.Length; i ++)
             {
                 Hex = fileBytes[i].ToString("X");
                 if (Hex.Length > 1)
@@ -107,6 +114,11 @@ namespace AsciTranslation
                 {
                     Console.Write($"0{Hex} ");
                 }
+            }
+            Console.Write("+  ");
+            for(int i = extra; i < 16; i ++)
+            {
+                Console.Write("   ");
             }
             for (int i = fileBytes.Length - extra; i < fileBytes.Length; i++)
             {
@@ -119,7 +131,7 @@ namespace AsciTranslation
                     Console.Write(". ");
                 }
             }
-            Console.WriteLine();
+            Console.WriteLine("+");
 
             ;
         }
