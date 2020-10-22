@@ -48,11 +48,24 @@ namespace AsciTranslation
             string filename = @"\\gmrdc1\Folder Redirection\Mikah.Kainen\Desktop\cpppractice\main.cpp";
             byte[] fileBytes = File.ReadAllBytes(filename);
 
+            string collumn;
+            for(int i = 0; i < 16; i ++)
+            {
+                collumn = i.ToString("X");
+                Console.Write($"{collumn} ");
+            }
+            Console.WriteLine("   DECODED TEXT");
+
             int index;
             string Hex;
             int extra = fileBytes.Length % 16;
-            for (int i = 0; i < fileBytes.Length / 16; i ++)
+            int row;
+            string rowHex;
+            for (int i = 0; i < fileBytes.Length / 16; i++)
             {
+                row = i * 16;
+                rowHex = row.ToString("X");
+                Console.Write($"{rowHex} ");
                 for (int x = 0; x < 16; x++)
                 {
                     index = i * 16 + x;
@@ -85,8 +98,28 @@ namespace AsciTranslation
 
             for(int i = fileBytes.Length - extra; i < fileBytes.Length; i ++)
             {
-                
+                Hex = fileBytes[i].ToString("X");
+                if (Hex.Length > 1)
+                {
+                    Console.Write($"{Hex} ");
+                }
+                else
+                {
+                    Console.Write($"0{Hex} ");
+                }
             }
+            for (int i = fileBytes.Length - extra; i < fileBytes.Length; i++)
+            {
+                if (fileBytes[i] > 32)
+                {
+                    Console.Write($"{(char)fileBytes[i]} ");
+                }
+                else
+                {
+                    Console.Write(". ");
+                }
+            }
+            Console.WriteLine();
 
             ;
         }
