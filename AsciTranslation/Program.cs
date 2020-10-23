@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
@@ -35,8 +36,51 @@ namespace AsciTranslation
             return byte.Parse(Hex);
         }
 
+        public static byte[] GetBytes()
+        {
+            return null;
+        }
+
+        public static string ManualHex(byte input)
+        {
+            int leftPart = input >> 4;
+            int mask = 15;
+            int rightPart = (input & mask);
+            string returnValue = null;
+
+            string hexAlphabet = "0123456789ABCDEF";
+
+
+            returnValue += hexAlphabet[leftPart];
+            returnValue += hexAlphabet[rightPart];
+
+            return returnValue;
+            //string binaryToHex(byte input)
+            //{
+            //    int index0;
+            //    int index1;
+            //    int index2;
+            //    int index3;
+
+            //}
+        }
+
+        public static bool IsPowerTwo(int input)
+        {
+            byte currentByte = (byte)input;
+
+            byte rightByte = (byte)(currentByte & 15);
+            return true;
+
+        }
+
         static void Main(string[] args)
         {
+            IsPowerTwo(73);
+
+            byte[] bytes = new byte[1];
+            new Random(1).NextBytes(bytes);
+            ManualHex(bytes[0]);
 
             int ZeroCount = 6;
 
